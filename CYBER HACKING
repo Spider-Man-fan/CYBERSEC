@@ -1,0 +1,35 @@
+
+#### 2. `port_scanner.py`
+```python
+#!/usr/bin/env python3
+"""
+Simple educational TCP port scanner.
+ONLY use on systems you own or have permission to scan.
+"""
+
+import socket
+from datetime import datetime
+
+def scan_port(ip, port):
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        result = sock.connect_ex((ip, port))
+        if result == 0:
+            print(f"[+] Port {port} is OPEN")
+        sock.close()
+    except Exception as e:
+        pass
+
+def main():
+    target = input("Enter target IP (e.g. 127.0.0.1): ").strip()
+    print(f"\nScanning {target} - Started at {datetime.now()}\n")
+    
+    # Scan common ports (1-1024)
+    for port in range(1, 1025):
+        scan_port(target, port)
+    
+    print(f"\nScan finished at {datetime.now()}")
+
+if __name__ == "__main__":
+    main()
